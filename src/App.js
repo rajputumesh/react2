@@ -1,7 +1,6 @@
 import React , { Component } from 'react';
 import SearchBox from './components/SearchBox';
 import Gallery from './components/Gallery';
-import { robots } from './components/robots';
 import './css/App.css';
 import 'tachyons';
 class App extends Component{
@@ -10,16 +9,23 @@ class App extends Component{
     {
       super();
       this.state = {
-        'robots':robots,
+        'robots':[],
         'searchFeild':''
       }
+    }
+    
+    componentDidMount(){
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(users =>
+        this.setState({robots:users}));
     }
     
     searchchange = (event) =>{
       this.setState({'searchFeild':event.target.value});
       console.log(event.target.value);
     }
-    
+
     render() {
 
       const filterrobots = this.state.robots.filter(robots => {
