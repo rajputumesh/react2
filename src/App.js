@@ -28,25 +28,28 @@ class App extends Component{
 
     render() {
 
-      const filterrobots = this.state.robots.filter(robots => {
-        return robots.name.toLocaleLowerCase().includes(this.state.searchFeild.toLocaleLowerCase());
+      const {robots,searchFeild} = this.state;
+      const filterrobots = robots.filter(robots => {
+        return robots.name.toLocaleLowerCase().includes(searchFeild.toLocaleLowerCase());
       })
 
       const gallery = filterrobots.map((users, i) =>{
           return <Gallery key={i} robot={filterrobots[i]}/>
       });
 
-      return (
-        <div className="section">
-          <h1 className="tc ma0 pa3">This Is My React App 5</h1>
-          <div className="pa5">
-            <SearchBox searchItem={this.searchchange}/>
-            <div className='flex flex-wrap'>
-              {gallery}
+      return !robots.length ?
+        <div>Loading</div> :
+        (
+          <div className="section">
+            <h1 className="tc ma0 pa3">This Is My React App 5</h1>
+            <div className="pa5">
+              <SearchBox searchItem={this.searchchange}/>
+              <div className='flex flex-wrap'>
+                {gallery}
+              </div>
             </div>
           </div>
-        </div>
-      );
+        );
     }
 }
 
